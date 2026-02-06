@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+chromadb
+torch
+clip @ git+https://github.com/openai/CLIP.git
+pillow
+sentence-transformers
+easyocr
+opencv-python
+openai
+python-dotenv
+timm==0.4.12
+fairscale==0.4.4
+pycocoevalcap
