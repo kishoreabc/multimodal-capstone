@@ -31,6 +31,8 @@ function App() {
         setError(null);
         try {
             const response = await searchByImage(file, topK, useReranking, queryText);
+            console.log('Image search response:', response);
+            console.log('First result sample:', response.results[0]);
             setResults(response.results);
         } catch (err) {
             setError(err.response?.data?.detail || err.message || 'Search failed. Please try again.');

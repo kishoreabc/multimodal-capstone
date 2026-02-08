@@ -105,7 +105,7 @@ const ImageUpload = ({ onSearch, isLoading }) => {
                             type="text"
                             value={queryText}
                             onChange={(e) => setQueryText(e.target.value)}
-                            placeholder="Optional: Add text query for better reranking"
+                            placeholder="Optional: Enter text query for reranking"
                             className="rerank-input"
                             disabled={isLoading}
                         />

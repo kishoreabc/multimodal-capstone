@@ -52,17 +52,27 @@ const SearchResults = ({ results, isLoading, error }) => {
             </div>
             <div className="results-grid">
                 {results.map((result, index) => {
-                    // Extract filename from path - handle both \ and / separators
+                    // Extract filename from path - handle both \\ and / separators
                     const pathParts = result.document.replace(/\\/g, '/').split('/');
                     const filename = pathParts[pathParts.length - 1];
                     const imageUrl = `http://localhost:8000/images/${filename}`;
+
+                    // Debug logging
+                    console.log(`Result ${index + 1}:`, {
+                        score: result.score,
+                        distance: result.distance,
+                        scoreType: typeof result.score,
+                        distanceType: typeof result.distance,
+                        scoreCheck: (result.score !== null && result.score !== undefined),
+                        distanceCheck: (result.distance !== null && result.distance !== undefined)
+                    });
 
                     return (
                         <div key={index} className="result-card">
                             <div className="result-rank">#{index + 1}</div>
                             {(result.score !== null && result.score !== undefined) && (
                                 <div className="result-score score">
-                                    Score: {result.score.toFixed(4)}
+                                    Score: {-1 * result.score.toFixed(4)}
                                 </div>
                             )}
                             {(result.distance !== null && result.distance !== undefined) && (

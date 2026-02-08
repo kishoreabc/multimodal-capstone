@@ -374,17 +374,29 @@ async def search_image(
         # Search ChromaDB
         results = chroma_search(query_vector, top_k=initial_top_k)
         
-        # Rerank if requested and query text provided
-        if use_reranking and query_text:
-            logger.info(f"Reranking image search results with query: {query_text}")
-            results = rerank_results(query_text, results, top_k=top_k)
-        elif use_reranking and not query_text:
-            logger.warning("Reranking requested but no query_text provided, skipping reranking")
-            # If no reranking, limit to top_k results
-            results["documents"] = [results["documents"][0][:top_k]]
-            results["metadatas"] = [results["metadatas"][0][:top_k]]
-            if "distances" in results:
-                results["distances"] = [results["distances"][0][:top_k]]
+        # Rerank if requested
+        if use_reranking:
+            # Use query_text if provided, otherwise use metadata from first result as fallback
+            if query_text:
+                rerank_query = query_text
+                logger.info(f"Reranking image search results with provided query: {query_text}")
+            else:
+                # Generate a query from the first result's metadata
+                first_metadata = results["metadatas"][0][0] if results["metadatas"][0] else {}
+                metadata_parts = []
+                for key in ['material', 'category', 'color', 'stone', 'style']:
+                    if key in first_metadata and first_metadata[key]:
+                        metadata_parts.append(str(first_metadata[key]))
+                
+                if metadata_parts:
+                    rerank_query = " ".join(metadata_parts)
+                else:
+                    # Fallback to generic query
+                    rerank_query = "jewelry item"
+                
+                logger.info(f"Reranking image search results with generated query: {rerank_query}")
+            
+            results = rerank_results(rerank_query, results, top_k=top_k)
         else:
             # If no reranking, limit to top_k results
             results["documents"] = [results["documents"][0][:top_k]]
@@ -399,6 +411,12 @@ async def search_image(
         scores = results.get("scores", [None] * len(documents))[0] if "scores" in results else [None] * len(documents)
         distances = results.get("distances", [None] * len(documents))[0] if "distances" in results else [None] * len(documents)
         
+        # Debug logging
+        logger.info(f"Results keys: {results.keys()}")
+        logger.info(f"Has scores: {'scores' in results}, Has distances: {'distances' in results}")
+        logger.info(f"Scores type: {type(scores)}, Distances type: {type(distances)}")
+        logger.info(f"First score: {scores[0] if scores else None}, First distance: {distances[0] if distances else None}")
+        
         for doc, meta, score, distance in zip(documents, metadatas, scores, distances):
             search_results.append(SearchResult(
                 document=doc,
@@ -406,6 +424,7 @@ async def search_image(
                 score=score,
                 distance=distance
             ))
+            logger.debug(f"Result: score={score}, distance={distance}")
         
         logger.info(f"Returning {len(search_results)} results")
         return SearchResponse(results=search_results, total=len(search_results))
