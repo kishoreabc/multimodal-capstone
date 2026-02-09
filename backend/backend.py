@@ -262,7 +262,7 @@ def extract_text_from_image(image: Image.Image) -> str:
         
         # Extract text from response
         text = response.choices[0].message.content.strip()
-        print(f"Extracted text via Gemini API: {text}", flush=True)
+
         logger.info(f"Extracted text via Gemini API: {text}")
         return text
         
@@ -407,11 +407,7 @@ async def search_image(
         scores = results.get("scores", [None] * len(documents))[0] if "scores" in results else [None] * len(documents)
         distances = results.get("distances", [None] * len(documents))[0] if "distances" in results else [None] * len(documents)
         
-        # Debug logging
-        logger.info(f"Results keys: {results.keys()}")
-        logger.info(f"Has scores: {'scores' in results}, Has distances: {'distances' in results}")
-        logger.info(f"Scores type: {type(scores)}, Distances type: {type(distances)}")
-        logger.info(f"First score: {scores[0] if scores else None}, First distance: {distances[0] if distances else None}")
+
         
         for doc, meta, score, distance in zip(documents, metadatas, scores, distances):
             search_results.append(SearchResult(
@@ -420,7 +416,7 @@ async def search_image(
                 score=score,
                 distance=distance
             ))
-            logger.debug(f"Result: score={score}, distance={distance}")
+
         
         logger.info(f"Returning {len(search_results)} results")
         return SearchResponse(results=search_results, total=len(search_results))
