@@ -25,19 +25,19 @@ The system consists of a React frontend and a FastAPI backend, utilizing ChromaD
 
 ```mermaid
 graph TD
-    subgraph Frontend [Frontend (React + Vite)]
+    subgraph Frontend ["Frontend (React + Vite)"]
         UI[User Interface]
         API_Client[API Client]
     end
 
-    subgraph Backend [Backend (FastAPI)]
+    subgraph Backend ["Backend (FastAPI)"]
         API[API Endpoints]
         CLIP[CLIP Model]
         Reranker[CrossEncoder]
         OCR[Gemini OCR]
     end
 
-    subgraph Data [Data Layer]
+    subgraph Data ["Data Layer"]
         Chroma[ChromaDB]
         FS[Raw Images]
     end
