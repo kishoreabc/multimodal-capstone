@@ -14,8 +14,7 @@ venv/
 ENV/
 env/
 
-# ChromaDB
-chroma_db/
+
 
 # IDE
 .vscode/

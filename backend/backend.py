@@ -353,9 +353,6 @@ async def search_image(
     Search using image upload with optional reranking
     """
     try:
-        logger.debug(f"Image search - file: {file.filename}, top_k: {top_k}, use_reranking: {use_reranking}, query_text: {query_text}")
-        logger.info(f"Image search request: {file.filename}, top_k={top_k}, use_reranking={use_reranking}")
-        
         # Validate file type
         if not file.content_type.startswith("image/"):
             raise HTTPException(status_code=400, detail="File must be an image")
@@ -379,7 +376,6 @@ async def search_image(
             # Use query_text if provided, otherwise use metadata from first result as fallback
             if query_text:
                 rerank_query = query_text
-                logger.info(f"Reranking image search results with provided query: {query_text}")
             else:
                 # Generate a query from the first result's metadata
                 first_metadata = results["metadatas"][0][0] if results["metadatas"][0] else {}
