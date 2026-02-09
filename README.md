@@ -7,13 +7,13 @@ A powerful search system that allows users to find jewelry items using text, ima
 ## Features
 
 - **Text Search**: Search for items using natural language descriptions.
-![Text based search page](text_search.png)
+![Text based search page](results/text_search.png)
 
 - **Image Search**: Upload an image to find visually similar items.
-![Image based search page](image_search.png)
+![Image based search page](results/image_search.png)
 
 - **OCR Search**: Upload images with handwritten text to extract and search based on the content.
-![Handwritten text based search page](ocr_search.png)
+![Handwritten text based search page](results/ocr_search.png)
 
 
 - **Reranking**: Improves search relevance using a Cross-Encoder model.
@@ -24,38 +24,80 @@ A powerful search system that allows users to find jewelry items using text, ima
 The system consists of a React frontend and a FastAPI backend, utilizing ChromaDB for vector storage and various AI models for processing.
 
 ```mermaid
-graph TD
-<<<<<<< HEAD
-    subgraph Frontend ["Frontend (React + Vite)"]
-=======
-    subgraph Frontend [(React + Vite)]
->>>>>>> b5f7ed3c68d80f7477368550dd51553ba5c45130
-        UI[User Interface]
-        API_Client[API Client]
-    end
+graph LR
 
-    subgraph Backend ["Backend (FastAPI)"]
-        API[API Endpoints]
-        CLIP[CLIP Model]
-        Reranker[CrossEncoder]
-        OCR[Gemini OCR]
-    end
+%% CLIENT
+Client[Client Web App]
 
-    subgraph Data ["Data Layer"]
-        Chroma[ChromaDB]
-        FS[Raw Images]
-    end
+%% INPUTS
+TextInput[Text Query]
+ImageInput[Image Upload]
 
-    UI --> API_Client
-    API_Client <--> API
+%% FRONTEND / API
+Client --> TextInput
+Client --> ImageInput
+TextInput --> API
+ImageInput --> API
+
+%% BACKEND
+subgraph Backend["FastAPI Backend"]
+
+    API[API Gateway]
+
+    CLIP[CLIP Encoder]
+    Reranker[CrossEncoder]
+    OCR[Gemini OCR]
+
     API --> CLIP
-    API --> Reranker
     API --> OCR
-    CLIP --> Chroma
-    Reranker --> Chroma
-    OCR --> GoogleAPI[Google Gemini API]
-    API -.-> FS
+    CLIP --> Reranker
+end
+
+%% DATA LAYER
+subgraph Data["Data Layer"]
+    direction TB
+    VectorDB[ChromaDB]
+    RawImages[Raw Image Store]
+end
+
+%% CONNECTIONS
+Reranker --> VectorDB
+OCR --> VectorDB
+API --> RawImages
+
+%% EXTERNAL
+OCR --> GeminiAPI[Google Gemini API]
+
+%% OUTPUT
+VectorDB --> Results[Top Similar Images + Recommendations]
+Results --> Client
 ```
+
+<br/>
+<br/>
+
+## 📸 Sample Search Results
+
+<div align="center">
+
+### 🔍 Text Search Result
+<img src="results/text_result.png" width="600"/>
+
+<br/><br/>
+
+### 🖼️ Image Search Result
+<img src="results/image_result.png" width="600"/>
+
+<br/><br/>
+
+### ✍️ OCR Search Result
+<img src="results/ocr_result.png" width="600"/>
+
+</div>
+
+<br/>
+<br/>
+
 
 ## 🛠️ Tech Stack
 
