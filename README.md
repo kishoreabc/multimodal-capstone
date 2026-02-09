@@ -25,7 +25,7 @@ The system consists of a React frontend and a FastAPI backend, utilizing ChromaD
 
 ```mermaid
 graph TD
-    subgraph Frontend [Frontend (React + Vite)]
+    subgraph Frontend [(React + Vite)]
         UI[User Interface]
         API_Client[API Client]
     end
