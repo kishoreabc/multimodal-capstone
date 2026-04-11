@@ -26,8 +26,8 @@ logger = logging.getLogger(__name__)
 # -----------------------
 
 app = FastAPI(
-    title="Multimodal Search API",
-    description="API for text and image search with reranking capabilities",
+    title="EchoVault API",
+    description="EchoVault – Voice-Powered Memory Assistant API",
     version="1.0.0"
 )
 
@@ -307,7 +307,7 @@ def extract_text_from_image(image: Image.Image) -> str:
 async def root():
     """Root endpoint with API information"""
     return {
-        "message": "Multimodal Search API",
+        "message": "EchoVault API",
         "version": "1.0.0",
         "endpoints": {
             "text_search": "/api/search/text",

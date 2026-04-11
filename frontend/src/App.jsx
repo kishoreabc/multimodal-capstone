@@ -64,9 +64,9 @@ function App() {
             <div className="container">
                 <header className="header">
                     <h1 className="title">
-                        <span className="gradient-text">Multimodal Search</span>
+                        <span className="gradient-text">EchoVault</span>
                     </h1>
-                    <p className="subtitle">Search fashion products using text or images with AI-powered reranking</p>
+                    <p className="subtitle">Voice-Powered Memory Assistant</p>
                 </header>
 
                 <div className="tabs">

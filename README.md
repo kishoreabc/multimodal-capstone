@@ -1,7 +1,7 @@
 
-# Multimodal Search Application
+# EchoVault – Voice-Powered Memory Assistant
 
-A powerful search system that allows users to find jewelry items using text, images, and handwriting (OCR). This application leverages advanced AI models for semantic understanding and retrieval.
+A powerful search system that allows users to find fashion items using text, images, and handwriting (OCR). This application leverages advanced AI models for semantic understanding and retrieval.
 
 
 ## Features
@@ -179,7 +179,7 @@ Results --> Client
 ## 📖 Usage
 
 1.  **Text Search**: Enter a description (e.g., "gold necklace with ruby") in the search bar and press enter.
-2.  **Image Search**: Click the camera icon or drag & drop an image to search for similar jewelry.
+2.  **Image Search**: Click the camera icon or drag & drop an image to search for similar fashion.
 3.  **OCR Search**: Switch to the OCR tab to upload an image with text (e.g., a handwritten tag) to search based on the text.
 4.  **Reranking**: Toggle the "Use Reranking" switch to improve result accuracy (may be slower).
 
