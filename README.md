@@ -1,5 +1,4 @@
 
-# EchoVault – Voice-Powered Memory Assistant
 
 A powerful search system that allows users to find fashion items using text, images, and handwriting (OCR). This application leverages advanced AI models for semantic understanding and retrieval.
 
